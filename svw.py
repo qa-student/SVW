@@ -39,6 +39,7 @@ class ReqHandler(http.server.BaseHTTPRequestHandler):
                     content = subprocess.check_output("nslookup " + params["domain"], shell=True, stderr=subprocess.STDOUT, stdin=subprocess.PIPE).decode()
                 elif "xml" in params:
                     content = lxml.etree.tostring(lxml.etree.parse(io.BytesIO(params["xml"].encode()), lxml.etree.XMLParser(no_network=False)), pretty_print=True).decode()
+                    content2 = lxml.etree.tostring(lxml.etree.parse(io.BytesIO(params["xml"].encode()), lxml.etree.XMLParser(no_network=False)), pretty_print=True).decode()
                 elif "name" in params:
                     found = lxml.etree.parse(io.BytesIO(USERS_XML.encode())).xpath(".//user[name/text()='%s']" % params["name"])
                     content += "<b>Surname:</b> %s%s" % (found[-1].find("surname").text if found else "-", HTML_POSTFIX)
